@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expense_tracker/screens/home/views/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -48,6 +49,7 @@ class HomeScreen extends StatelessWidget {
                 )),
             child: const Icon(CupertinoIcons.add)),
       ),
+      body: const MainScreen(),
     );
   }
 }
