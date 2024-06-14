@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:expense_tracker/data/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -73,22 +75,21 @@ class MainScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width / 2,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.secondary,
-                      Theme.of(context).colorScheme.tertiary,
-                    ],
-                    transform: const GradientRotation(pi / 4),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
+                borderRadius: BorderRadius.circular(25),
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.secondary,
+                    Theme.of(context).colorScheme.tertiary,
+                  ],
+                  transform: const GradientRotation(pi / 4),
+                ),
+                boxShadow: [
+                  BoxShadow(
                       blurRadius: 4,
                       color: Colors.grey.shade300,
-                      offset: const Offset(5, 5)
-                    ),
-                  ],
+                      offset: const Offset(5, 5)),
+                ],
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +114,8 @@ class MainScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -123,7 +125,8 @@ class MainScreen extends StatelessWidget {
                               width: 25,
                               height: 25,
                               decoration: const BoxDecoration(
-                                  color: Colors.white30, shape: BoxShape.circle),
+                                  color: Colors.white30,
+                                  shape: BoxShape.circle),
                               child: const Center(
                                   child: Icon(
                                 CupertinoIcons.arrow_down,
@@ -163,7 +166,8 @@ class MainScreen extends StatelessWidget {
                               width: 25,
                               height: 25,
                               decoration: const BoxDecoration(
-                                  color: Colors.white30, shape: BoxShape.circle),
+                                  color: Colors.white30,
+                                  shape: BoxShape.circle),
                               child: const Center(
                                   child: Icon(
                                 CupertinoIcons.arrow_down,
@@ -202,6 +206,108 @@ class MainScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Transactions',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'View All',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.outline,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: transactionsData.length,
+                itemBuilder: (context, int i) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(
+                            color: Colors.white, 
+                            borderRadius: BorderRadius.circular(12)
+                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration:  BoxDecoration(
+                                        color: transactionsData[i]['color'],
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    transactionsData[i]['icon']
+                                  ],
+                                ),
+                                const SizedBox(width: 12,),
+                                Text(
+                                  transactionsData[i]['name'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).colorScheme.onBackground,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  transactionsData[i]['totalAmount'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).colorScheme.onBackground,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  transactionsData[i]['date'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).colorScheme.outline,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+              }),
             ),
           ],
         ),
