@@ -1,6 +1,4 @@
 import 'package:expense_tracker/screens/stats/chart.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StatScreen extends StatelessWidget {
@@ -10,7 +8,7 @@ class StatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
