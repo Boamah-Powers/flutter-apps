@@ -2,8 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AddExpense extends StatelessWidget {
+class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
+
+  @override
+  State<AddExpense> createState() => _AddExpenseState();
+}
+
+class _AddExpenseState extends State<AddExpense> {
+  TextEditingController expenseController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  @override
+  void initState() {
+    dateController.text = DateTime.now().toString();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +34,27 @@ class AddExpense extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Add Expenses',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                )
+              const Text('Add Expenses',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                  )),
+              const SizedBox(
+                height: 16.0,
               ),
-              const SizedBox(height: 16.0,),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: TextFormField(
+                  controller: expenseController,
                   textAlignVertical: TextAlignVertical.center,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    prefixIcon: const Icon(FontAwesomeIcons.dollarSign, size: 16.0,),
+                    prefixIcon: const Icon(
+                      FontAwesomeIcons.dollarSign,
+                      size: 16.0,
+                      color: Colors.grey,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
@@ -42,18 +62,75 @@ class AddExpense extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0,),
-              TextFormField(),
-              const SizedBox(height: 16.0,),
-              TextFormField(),
-              const SizedBox(height: 16.0,),
-              TextButton(
-                onPressed: () {
-      
-                }, 
-                child: const Text(
-                  'Save',
-                )
+              const SizedBox(
+                height: 32.0,
+              ),
+              TextFormField(
+                controller: categoryController,
+                textAlignVertical: TextAlignVertical.center,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  prefixIcon: const Icon(
+                    FontAwesomeIcons.list,
+                    size: 16.0,
+                    color: Colors.grey,
+                  ),
+                  hintText: 'Category',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              TextFormField(
+                controller: dateController,
+                textAlignVertical: TextAlignVertical.center,
+                readOnly: true,
+                onTap: () {
+                  showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now().subtract(Duration(days: 1000)),
+                      lastDate: DateTime.now().add(Duration(days: 1000)));
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  prefixIcon: const Icon(
+                    FontAwesomeIcons.clock,
+                    size: 16.0,
+                    color: Colors.grey,
+                  ),
+                  hintText: 'Date',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 32.0,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: kToolbarHeight,
+                child: TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    )),
               )
             ],
           ),
