@@ -125,7 +125,7 @@ class _AddExpenseState extends State<AddExpense> {
                               child: ListTile(
                                 leading: Image.asset(
                                   'assets/${state.categories[i].icon}.png',
-                                  scale: 2,
+                                  scale: 3,
                                 ),
                                 title: Text(
                                   state.categories[i].name,
