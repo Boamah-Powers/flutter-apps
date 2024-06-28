@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:expense_repository/expense_repository.dart';
 import 'package:expense_tracker/screens/add_expense/blocs/create_category_bloc/create_category_bloc.dart';
+import 'package:expense_tracker/screens/add_expense/blocs/create_expense_bloc/create_expense_bloc.dart';
 import 'package:expense_tracker/screens/add_expense/blocs/get_categories_bloc/get_categories_bloc.dart';
 import 'package:expense_tracker/screens/add_expense/views/add_expense.dart';
+import 'package:expense_tracker/screens/home/blocs/get_expenses_bloc/get_expenses_bloc.dart';
 import 'package:expense_tracker/screens/home/views/main_screen.dart';
 import 'package:expense_tracker/screens/stats/stats.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,9 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           CreateCategoryBloc(FirebaseExpenseRepo()),
                     ),
                     BlocProvider(
-                      create: (context) => GetCategoriesBloc(FirebaseExpenseRepo())..add(
-                        GetCategories()
-                      ),
+                      create: (context) =>
+                          GetCategoriesBloc(FirebaseExpenseRepo())
+                            ..add(GetCategories()),
+                    ),
+                    BlocProvider(
+                      create: (context) =>
+                          CreateExpenseBloc(FirebaseExpenseRepo()),
                     ),
                   ],
                   child: const AddExpense(),
@@ -94,7 +100,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
             child: const Icon(CupertinoIcons.add)),
       ),
-      body: index == 0 ? MainScreen() : StatScreen(),
+      body: index == 0
+          ? BlocProvider(
+              create: (context) => GetExpensesBloc(
+                FirebaseExpenseRepo()
+              )..add(GetExpenses()),
+              child: const MainScreen(),
+            )
+          : const StatScreen(),
     );
   }
 }
